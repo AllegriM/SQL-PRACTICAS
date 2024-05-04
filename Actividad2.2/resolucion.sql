@@ -137,3 +137,22 @@ WHERE
 ORDER BY 
     NombreCurso ASC,
     TipoIdioma ASC;
+
+-- 20 Listado con nombre del curso y todos los importes de los pagos relacionados.
+
+SELECT C.Nombre, P.Importe as Importe_Pagos FROM Cursos as C
+INNER JOIN Inscripciones AS I ON I.IDCurso = C.ID
+INNER JOIN Pagos AS P ON P.IDInscripcion = I.ID
+
+-- Listado con nombre de curso, costo de cursado y una leyenda que indique "Costoso" si el costo de cursado es mayor a $ 15000, 
+-- "Accesible" si el costo de cursado está entre $2500 y $15000, "Barato" si el costo está entre $1 y $2499 y "Gratis" si el costo es $0.21
+
+SELECT Nombre, CostoCurso,
+    CASE 
+        WHEN CostoCurso > 15000 THEN 'Costoso'
+        WHEN CostoCurso BETWEEN 2500 AND 15000 THEN 'Accesible'
+        WHEN CostoCurso BETWEEN 1 AND 2499 THEN 'Barato'
+        WHEN CostoCurso = 0.21 THEN 'Gratis'
+        ELSE 'Gratirola'
+    END AS Leyeeenda
+FROM Cursos;
